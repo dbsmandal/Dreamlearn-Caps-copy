@@ -138,7 +138,7 @@ const handleBtnPress = async () => {
             </div>
 
             <div className="mb-4">
-              <input
+              <input 
                 placeholder='Password'
                 name="password"
                 type="password"
