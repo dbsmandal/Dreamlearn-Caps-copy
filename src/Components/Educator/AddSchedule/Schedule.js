@@ -75,9 +75,9 @@ export const Schedule = (props) => {
   return (
     <>
 
-      <div className='grid grid-cols-3 gap-5 m-auto'>
+      <div className=' grid grid-cols-3 gap-1 m-auto '>
 
-        <div className=" mt-2 text-start">
+        <div className=" mt-2 text-start ">
           <form
             autoComplete="off"
             className=" text-purple-900  bg-white rounded  flex flex-col content-center mb-4 "
@@ -90,11 +90,11 @@ export const Schedule = (props) => {
             </div >
             <div className='mt-1'>
               <label className=" text-purple-900 text-sm font-bold mb-6">Time Slot</label>
-              <div className='flex gap-2 place-items-center'>
-                <input type="time" id='appt' className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" required
+              <div className='flex gap-1 place-items-center'>
+                <input type="time" id='appt' className="shadow appearance-none border rounded w-full py-2 px-2 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" required
                   onChange={(e) => setSlotStart(e.target.value)} value={slotStart} />
-                <h1>To</h1>
-                <input type="time" className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" id='appt' required
+                <p>To</p>
+                <input type="time" className="shadow appearance-none border rounded w-full py-2 px-2 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" id='appt' required
                   onChange={(e) => setSlotEnd(e.target.value)} value={slotEnd} />
               </div>
             </div>

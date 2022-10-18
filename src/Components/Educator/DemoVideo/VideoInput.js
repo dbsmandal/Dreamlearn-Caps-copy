@@ -64,7 +64,7 @@ export default function VideoInput(props) {
       />
 
       {errors.uploadVideo && <div className="text-red-600 font-semibold mb-3">{errors.uploadVideo}</div>}
-      {!source && <button className="border p-1 mt-6 text-lg  hover:border-transparent rounded-lg bg-purple-900 text-white w-32 m-auto" onClick={handleChoose}>Choose Video</button>}
+       <button className="border p-1 mt-6 text-lg  hover:border-transparent rounded-lg bg-purple-900 text-white w-32 m-auto" onClick={handleChoose}>Choose Video</button>
 
       <VideoCourseTitle video={uploadVideo} />
     </div>

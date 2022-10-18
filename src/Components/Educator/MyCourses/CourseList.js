@@ -36,7 +36,7 @@ const CourseList = () => {
                     const { id, title } = data;
                     return (
                         <div key={id} className="grid grid-cols-11 gap-1  mt-5 m-3 p-2 border shadow-sm rounded-md shadow-purple-500" >
-                            <div className="font-semibold  text-left p-2  text-xl text-purple-700 col-span-9  "
+                            <div className="font-semibold  text-left p-2  text-xl text-purple-700 col-span-8  "
                             >Course Title: <span className='text-purple-500 pl-5'>{title}</span>
                             </div>
                            <div >

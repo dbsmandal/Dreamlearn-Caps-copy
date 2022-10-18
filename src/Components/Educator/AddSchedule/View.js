@@ -6,7 +6,7 @@ export const View = ({ schedules, deleteSchedule }) => {
 
     return schedules.map((schedule, index) => (
 
-        <tr key={index} className='text-purple-700 text-lg col-span-2'>
+        <tr key={index} className='text-purple-700 text-lg col-span-2 '>
             <td className='text-center'>{schedule.sl}</td>
             <td>{schedule.topic}</td>
             <td>{schedule.slotStart}</td>

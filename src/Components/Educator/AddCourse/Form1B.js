@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import EducatorService from '../../Auth/educator.service';
 
 const Form1B = (props) => {
-    // console.log(props, "imageInput")
+    console.log("form1B", props)
 
     const [data, setData] = useState({
         title: "",
@@ -12,7 +12,8 @@ const Form1B = (props) => {
         startDate: "",
         endDate: "",
         classDays: "",
-        image: null
+        image: null,
+        video: null,
     })
     // console.log(data)
     let errorsObj = {
@@ -23,7 +24,8 @@ const Form1B = (props) => {
         startDate: '',
         endDate: '',
         classDays: '',
-        image: ''
+        image: '',
+        video: '',
     };
     const [errors, setErrors] = useState(errorsObj);
     const [successMsg, setSuccessMsg] = useState('')
@@ -76,7 +78,7 @@ const Form1B = (props) => {
             courseDetail.append("endDate", data.endDate);
             courseDetail.append("classDays", data.classDays);
             courseDetail.append("image", props.image);
-
+            courseDetail.append("video", props.video);
             EducatorService.uploadCourse(courseDetail).then((response) => {
                 console.log("successMsg", response.data.message)
                 setSuccessMsg(response.data.message);
@@ -96,96 +98,99 @@ const Form1B = (props) => {
     }
 
     return (
-        <div className=" mt-10 text-start">
-            <form onSubmit={(e) => handleSubmit(e)} className=" text-purple-900  bg-white rounded  flex flex-col content-center mb-4 " >
-                <div >
-                    <label className=" text-purple-900 text-sm font-bold mb-2">Course Title:</label>
-                    <input
-                        value={data.title}
-                        onChange={(e) => handleChange(e)}
-                        type="text" name="title" id="title" placeholder='Course Title'
-                        className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                {errors.title && <div className="text-red-600 font-semibold  mb-6">{errors.title}</div>}
-                <div>
-                    <label className=" text-purple-900 text-sm font-bold mb-6">Course Description:</label>
-                    <input
-                        value={data.description}
-                        onChange={(e) => handleChange(e)}
-                        type="text" name="Description" id="description" placeholder='Course  Description'
-                        className="shadow appearance-none border rounded w-full mt-1 py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                {errors.description && <div className="text-red-600 font-semibold mb-6">{errors.description}</div>}
-                <div >
-                    <label className=" text-purple-900 text-sm font-bold mb-6"> Select Instrument</label>
-                    <select onChange={(e) => handleChange(e)} name="instrument" id="instrument"
-                        className="shadow appearance-none border rounded w-full mt-1 py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline">
-                        <option  disabled >Please  Select</option>
-                        <option value="tabla"  >Tabla</option>
-                        <option value="dholak" >Dholak</option>
-                        <option value="flute" >Flute</option>
-                        <option value="veena">Veena</option>
-                        <option value="harmonium" >Harmonium</option>
-                        <option value="piano">Piano</option>
-                        <option value="guitar" >Guitar</option>
-                        <option value="drums" >Drums</option>
-                        <option value="trumpet" >Trumpet</option>
-                        <option value="violin">Violin</option>
-                    </select>
-                </div>
-                {errors.instrument && <div className="text-red-600 font-semibold mb-6">{errors.instrument}</div>}
-                <div >
-                    <label className=" text-purple-900 text-sm font-bold mb-2">Course Duration:</label>
-                    <input
-                        value={data.duration}
-                        onChange={(e) => handleChange(e)}
-                        type="number" name="Duration" id="duration" placeholder=' Course Duration'
-                        className="shadow appearance-none border rounded w-full mt-1 py-2 px-3  text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                {errors.duration && <div className="text-red-600 font-semibold mb-6">{errors.duration}</div>}
-                <div className='mt-2' >
-                    <label className=" text-purple-900 text-sm font-bold mb-2">Course Starting Date:</label>
-                    <input
-                        value={data.startDate}
-                        onChange={(e) => handleChange(e)}
-                        type="date" name="startDate" id="startDate" placeholder='Starting Date'
-                        className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                {errors.startDate && <div className="text-red-600 font-semibold mb-6">{errors.startDate}</div>}
-                <div className='mt-2'>
-                    <label className=" text-purple-900 text-sm font-bold mb-2">Course End Date:</label>
-                    <input
-                        value={data.endDate}
-                        onChange={(e) => handleChange(e)}
-                        type="date" name="endDate" id="endDate" placeholder='End Date'
-                        className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
-                </div>
-                {errors.endDate && <div className="text-red-600 font-semibold mb-6">{errors.endDate}</div>}
-                <div className='mt-2'>
-                    <label className=" text-purple-900 text-sm font-bold mb-2">Days:</label>
-                    <select onChange={(e) => handleChange(e)} name="classDays" id="classDays"
-                        className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" >
-                        <option  >Please Select</option>
-                        <option value="weekend" id='weekend' >Weekend</option>
-                        <option value="workingday" id='workingday'>Working Day</option>
+        <>
+            <div className=" mt-12 text-start w-96 row-span-3">
 
-                    </select>
-                </div>
-                {errors.classDays && <div className="text-red-600 font-semibold mb-6">{errors.classDays}</div>}
-                <button className="border p-1 mt-3 text-lg rounded-lg bg-purple-900 text-white w-32 m-auto focus:outline-none focus:shadow-outline"
-                    type='submit' >Submit</button>
-                {successMsg ? (
-                    <>
-                        <div className='text-center mt-6 text-3xl font-semibold text-purple-700 capitalize'>
-                            {successMsg}
-                        </div>
-                        <div className="mb-4 m-auto ">
-                            <button className="border p-1 mt-4 text-lg rounded-lg bg-purple-900 text-white w-30 focus:outline-none focus:shadow-outline" type='submit' onClick={handleReload}>Add More Course</button>
-                        </div>
-                    </>) : null}
-            </form>
+                <form onSubmit={(e) => handleSubmit(e)} className=" text-purple-900  bg-white rounded  flex flex-col content-center mb-4 " >
+                    <div >
+                        <label className=" text-purple-900 text-sm font-bold mb-2">Course Title:</label>
+                        <input
+                            value={data.title}
+                            onChange={(e) => handleChange(e)}
+                            type="text" name="title" id="title" placeholder='Course Title'
+                            className="shadow appearance-none border rounded w-full py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    {errors.title && <div className="text-red-600 font-semibold  mb-6">{errors.title}</div>}
+                    <div>
+                        <label className=" text-purple-900 text-sm font-bold mb-6">Course Description:</label>
+                        <input
+                            value={data.description}
+                            onChange={(e) => handleChange(e)}
+                            type="text" name="Description" id="description" placeholder='Course  Description'
+                            className="shadow appearance-none border rounded w-full mt-1 py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    {errors.description && <div className="text-red-600 font-semibold mb-6">{errors.description}</div>}
+                    <div >
+                        <label className=" text-purple-900 text-sm font-bold mb-6"> Select Instrument</label>
+                        <select onChange={(e) => handleChange(e)} name="instrument" id="instrument"
+                            className="shadow appearance-none border rounded w-full mt-1 py-2 px-3 mb-2 text-purple-900 leading-tight focus:outline-none focus:shadow-outline">
+                            <option disabled >Please  Select</option>
+                            <option value="tabla"  >Tabla</option>
+                            <option value="dholak" >Dholak</option>
+                            <option value="flute" >Flute</option>
+                            <option value="veena">Veena</option>
+                            <option value="harmonium" >Harmonium</option>
+                            <option value="piano">Piano</option>
+                            <option value="guitar" >Guitar</option>
+                            <option value="drums" >Drums</option>
+                            <option value="trumpet" >Trumpet</option>
+                            <option value="violin">Violin</option>
+                        </select>
+                    </div>
+                    {errors.instrument && <div className="text-red-600 font-semibold mb-6">{errors.instrument}</div>}
+                    <div >
+                        <label className=" text-purple-900 text-sm font-bold mb-2">Course Duration:</label>
+                        <input
+                            value={data.duration}
+                            onChange={(e) => handleChange(e)}
+                            type="number" name="Duration" id="duration" placeholder=' Course Duration'
+                            className="shadow appearance-none border rounded w-full mt-1 py-2 px-3  text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    {errors.duration && <div className="text-red-600 font-semibold mb-6">{errors.duration}</div>}
+                    <div className='mt-2' >
+                        <label className=" text-purple-900 text-sm font-bold mb-2">Course Starting Date:</label>
+                        <input
+                            value={data.startDate}
+                            onChange={(e) => handleChange(e)}
+                            type="date" name="startDate" id="startDate" placeholder='Starting Date'
+                            className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    {errors.startDate && <div className="text-red-600 font-semibold mb-6">{errors.startDate}</div>}
+                    <div className='mt-2'>
+                        <label className=" text-purple-900 text-sm font-bold mb-2">Course End Date:</label>
+                        <input
+                            value={data.endDate}
+                            onChange={(e) => handleChange(e)}
+                            type="date" name="endDate" id="endDate" placeholder='End Date'
+                            className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    {errors.endDate && <div className="text-red-600 font-semibold mb-6">{errors.endDate}</div>}
+                    <div className='mt-2'>
+                        <label className=" text-purple-900 text-sm font-bold mb-2">Days:</label>
+                        <select onChange={(e) => handleChange(e)} name="classDays" id="classDays"
+                            className="shadow appearance-none border rounded w-full mt-1  py-2 px-3 text-purple-900 leading-tight focus:outline-none focus:shadow-outline" >
+                            <option  >Please Select</option>
+                            <option value="weekend" id='weekend' >Weekend</option>
+                            <option value="workingday" id='workingday'>Working Day</option>
 
-        </div>
+                        </select>
+                    </div>
+                    {errors.classDays && <div className="text-red-600 font-semibold mb-6">{errors.classDays}</div>}
+                    <button className="border p-1 mt-3 text-lg rounded-lg bg-purple-900 text-white w-32 m-auto focus:outline-none focus:shadow-outline"
+                        type='submit' >Submit</button>
+                    {successMsg ? (
+                        <>
+                            <div className='text-center mt-6 text-3xl font-semibold text-purple-700 capitalize'>
+                                {successMsg}
+                            </div>
+                            <div className="mb-4 m-auto ">
+                                <button className="border p-1 mt-4 text-lg rounded-lg bg-purple-900 text-white w-30 focus:outline-none focus:shadow-outline" type='submit' onClick={handleReload}>Add More Course</button>
+                            </div>
+                        </>) : null}
+                </form>
+
+            </div>
+        </>
     )
 }
 
