@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import VideoInput from "./VideoInputAC";
 
 
@@ -15,7 +15,7 @@ export default function ImageInput(props) {
 
     const file = event.target.files[0];
     setUploadImage(file)
-    console.log(file, "file")
+    // console.log(file, "file")
     const url = URL.createObjectURL(file);
     setSource(url);
   };
@@ -25,8 +25,8 @@ export default function ImageInput(props) {
   };
 
   return (<>
-    <div className="grid grid-flow-row mt-10">
-      <div className=" m-auto w-72 pb-5 flex flex-col ">
+    <div className="grid grid-flow-row mt-14">
+      <div className=" m-auto w-80 pb-5 flex flex-col ">
         {source ? (
           <img
             className="m-auto h-48 rounded-lg"
@@ -46,12 +46,8 @@ export default function ImageInput(props) {
           onChange={handleFileChange}
           accept="png,jpg"
         />
-        <button className="border p-1  text-lg rounded-lg bg-purple-900 text-white w-32 m-auto" onClick={handleChoose}>Choose Image</button>
+        <button className="border p-1 hover:bg-purple-700 text-lg rounded-lg bg-purple-900 text-white w-32 m-auto" onClick={handleChoose}>Choose Image</button>
 
-        {/* <button
-        className="border p-1 mt-2 text-lg rounded-lg bg-purple-900 text-white w-32 m-auto focus:outline-none focus:shadow-outline"
-        onClick={uploadDemoImage} >Upload Image</button> */}
-        {/* <Form1B image={uploadImage} /> */}
       </div>
     </div>
     <VideoInput image={uploadImage} />

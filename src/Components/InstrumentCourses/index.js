@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import AuthService from "../../Auth/auth.service";
-import EducatorService from "../../Auth/educator.service";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import AuthService from "../Auth/auth.service";
+import LearnerService from "../Auth/learner.service";
 
-const EducatorSchedule = () => {
-    const [schedule, setSchedule] = useState([]);
-    const [loading, setLoading] = useState(false);
+export default function InstrumentCourses() {
+    const [instruments, setInstruments] = useState([]);
     const [error, setError] = useState([]);
     const [showErr, setShowErr] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
-    const { title } = params
-    // console.log("title", params)
+    const { instrument } = params;
     useEffect(() => {
         const getData = async () => {
             try {
                 setLoading(true);
-                const response = await EducatorService.showAddedCourseSchedule(title);
-                setSchedule(response.data.message);
+                const response = await LearnerService.instrumentTitle(instrument);
+                setInstruments(response.data.message);
+                setShowErr(false);
                 setLoading(false);
             } catch (err) {
                 // console.log(err.response.data.message);
@@ -32,12 +32,10 @@ const EducatorSchedule = () => {
             }
         }
         getData();
-    }, [title])
-
-
+    }, [instrument])
     return (
-        <>
-            <h3 className='text-center mt-10 text-3xl font-bold text-purple-900 underline underline-offset-2'>Schedule</h3>
+        <div className="z-10" >
+            <h3 className='text-center mt-10 text-3xl font-bold text-purple-900 underline underline-offset-2  capitalize'>{instrument}  Courses</h3>
             {loading ? <div className="text-center mt-20 pb-1">
                 <div role="status">
                     <svg className="inline mr-1 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600  fill-purple-900" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,29 +45,34 @@ const EducatorSchedule = () => {
                 </div>
             </div> : <>
                 {showErr ? <div className="text-4xl font-semibold mt-20 m-28 text-purple-900">{error}</div> :
-                    <>
-                        {schedule.map((item, index) => {
 
+                    <div className="w-6/12  mt-20 m-auto">
+                        {instruments?.map((data) => {
+                            const { courseTitle, imageUrl, educator, instrument, startDate, endDate } = data
                             return (
-                                <div key={index} className="grid grid-cols-3 w-8/12 mt-10 p-2 m-auto justify-between border shadow-sm rounded-md shadow-purple-500">
-                                    <div className="flex flex-col my-auto">
-                                        <div className="font-bold text-left pl-2 pb-0 text-lg text-purple-900">Topics</div>
-                                        <div className="text-start pl-2  font-semibold text-xl text-purple-700">{item.topic}</div>
-                                    </div>
-                                    <div className="my-auto">
-                                        <div className=" font-semibold text-lg text-purple-700">Date: {item.date}</div>
-                                        <div className=" font-semibold text-lg text-purple-700">Time: {item.slotStart}-{item.slotEnd}
+                                <Link key={imageUrl} to={`/instruments/${instrument}/${courseTitle}`} >
+                                    <div className='grid grid-cols-2  border p-4 mt-14  rounded-md shadow-md shadow-purple-400 cursor-pointer capitalize '>
+                                        <div className=" m-auto">
+                                            <img className="w-full h-56 rounded-md " src={imageUrl} alt={courseTitle} />
+                                        </div>
+                                        <div className="text-start m-auto">
+                                            <h3 className="text-lg font-semibold text-purple-900">Educator</h3>
+                                            <p className=" text-lg text-purple-700">{educator}</p>
+                                            <h3 className=" pt-3 text-lg font-semibold text-purple-900">Instrument</h3>
+                                            <p className="text-purple-700">{instrument}</p>
+                                            <h3 className=" pt-3 text-lg font-semibold text-purple-900">Course Start Date</h3>
+                                            <p className="text-purple-700">{startDate}</p>
+                                            <h3 className=" pt-3 text-lg font-semibold text-purple-900">Course End Date</h3>
+                                            <p className="text-purple-700">{endDate}</p>
                                         </div>
                                     </div>
-                                    <div className="my-auto text-end mr-2">
-                                        <button className="border p-1 pl-2 pr-2 text-lg rounded-lg bg-purple-900 text-white hover:bg-purple-700" >Scheduled</button>
-                                    </div>
-                                </div>
+                                </Link>
                             )
                         })}
-                    </>}
+
+                    </div >
+                }
             </>}
-        </>
+        </div >
     )
 }
-export default EducatorSchedule;

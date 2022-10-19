@@ -9,10 +9,11 @@ const signup = async (name, username, email, password, role) => {
         email,
         password,
         role
-    }).then((response) => {
-        console.log("user successfully signed in");
-        //localStorage.setItem("user", JSON.stringify(response.data));
     })
+    // .then((response) => {
+    //     console.log("user successfully signed in");
+    //     //localStorage.setItem("user", JSON.stringify(response.data));
+    // })
 };
 
 const signin = async (username, password) => {
@@ -21,7 +22,7 @@ const signin = async (username, password) => {
             username,
             password,
         }).then((response) => {
-            if (response.data.accessToken) {
+            if (response.data) {
                 localStorage.setItem("user", JSON.stringify(response.data));
 
             }

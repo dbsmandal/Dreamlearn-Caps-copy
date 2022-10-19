@@ -1,36 +1,38 @@
 import React, { useState, useEffect } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../Auth/auth.service';
 import LearnerService from '../Auth/learner.service';
 
 const LearnerHome = () => {
     const [learnerContent, setLearnerContent] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const navigate = useNavigate();
+    const [error, setError] = useState([]);
+    const [showErr, setShowErr] = useState(false);
+    const navigate = useNavigate();
     useEffect(() => {
-        setLoading(true);
-        LearnerService.getLearnerDashBoard().then(
-            (response) => {
-                // console.log('learner content', response);
+        const getData = async () => {
+            try {
+                setLoading(true);
+                const response = await LearnerService.getLearnerDashBoard();
                 setLearnerContent(response.data.message);
                 setLoading(false);
-            },
-            (error) => {
-                console.log('private page', error);
-                //invalid token
-                if (error.response && error.response.status === 403) {
+            } catch (err) {
+                // console.log(err);
+                setError(err.response.data.message);
+                setShowErr(true);
+                if (err.response.data.message === "Unauthorized!") {
                     AuthService.logout();
-                    Navigate('/signin');
+                    navigate('/signin');
                     window.location.reload();
                 }
             }
-        );
+        }
+        getData();
     }, [])
-    //need to use video card compnent
     return (
-        <div className="max-w-[1250px] mx-auto">
-            <h3 className='text-center mt-8 text-3xl  text-purple-900 shadow-md shadow-purple-300 underline underline-offset-2'>Demo Classes</h3>
+        <div className="max-w-[1250px] mx-auto ">
+            <h3 className='text-center mt-8 text-3xl font-bold text-purple-900 underline underline-offset-2'>Demo Classes</h3>
 
             {learnerContent.length === 0 && loading ? (
                 <div className="text-center">
@@ -41,23 +43,33 @@ const LearnerHome = () => {
                         </svg>
                         <h1 className='text-2xl text-center mt-3 text-purple-900'>loading...</h1>
                     </div>
-                </div>) :
-                (learnerContent.map((data) => {
-                    const { id, educator, instrument, videoUrl } = data;
-                    return (
-                        <div className='content-start inline-block m-4 mt-16'>
-                            <div key={id} className="inline-block w-80 h-56 overflow-hidden object-cover rounded-lg shadow-lg shadow-purple-500 mb-10" >
-                                <video className='w-full h-48' controls >
-                                    <source src={videoUrl} />
-                                </video>
-                                <div className='flex place-content-between text-purple-900 text-md items-center  m-1'>
-                                    <h2>{educator}</h2>
-                                    <p >{instrument}</p>
+                </div>) : <>
+                {showErr ? <div className="text-4xl font-semibold mt-20 m-28 text-purple-900">{error}</div> :
+
+                    (learnerContent.map((data) => {
+                        const { educator, instrument, videoUrl } = data;
+                        return (
+                            <div key={videoUrl} className='content-start inline-block m-9 mt-16'>
+                                <div className="inline-block w-80 h-64 overflow-hidden object-cover rounded-lg shadow-lg shadow-purple-400 mb-5" >
+                                    <video className='w-full h-48 rounded-t-md z-0' controls >
+                                        <source src={videoUrl} />
+                                    </video>
+                                    <div className='flex place-content-between capitalize text-purple-900 text-md items-center  m-2'>
+                                        <div className='text-start'>
+                                            <h3 className='font-semibold'>Educator</h3>
+                                            <p className='text-purple-700'>{educator}</p>
+                                        </div>
+                                        <div className='text-start '>
+                                            <h3 className='font-semibold'>Instrument</h3>
+                                            <p className='text-purple-700'>{instrument}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                }))}
+                        )
+                    }))
+                }
+            </>}
         </div>
     )
 };

@@ -17,7 +17,7 @@ const getDatafromLS = () => {
 }
 
 export const Schedule = (props) => {
-  // console.log(props, "Course__Title AFTER SELECT")
+  console.log(props, "Course__Title")
   // main array of objects state || schedules state || schedules array of objects
   const [schedules, setSchedules] = useState(getDatafromLS());
   const [topic, setTopic] = useState('');
@@ -25,9 +25,8 @@ export const Schedule = (props) => {
   const [slotEnd, setSlotEnd] = useState('');
   const [date, setDate] = useState('');
   const [sl, setSl] = useState('');
-  const [successMsg, setSuccessMsg] = useState('')
-  const [err, setErr] = useState([]);
-  const [showErr, setShowErr] = useState(false);
+  const [successMsg, setSuccessMsg] = useState([]);
+  const [failMsg, setFailMsg] = useState([]);
   const navigate = useNavigate();
   const handleAddMoreSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +36,8 @@ export const Schedule = (props) => {
       slotStart,
       slotEnd,
       date,
-      sl,
+      sl
+
     }
     setSchedules([...schedules, schedule]);
     setTopic('');
@@ -45,7 +45,6 @@ export const Schedule = (props) => {
     setSlotEnd('');
     setDate('');
     setSl('')
-
   }
 
   const deleteSchedule = (sl) => {
@@ -59,36 +58,37 @@ export const Schedule = (props) => {
     localStorage.setItem('schedules', JSON.stringify(schedules));
   }, [schedules])
 
-
   function handleSubmit(e) {
     e.preventDefault();
-    let data = JSON.parse(localStorage.getItem('schedules'));
-    data.push({ courseTitle: props.courseTitle, topic: topic, slotStart, slotEnd, date, sl })
 
-    EducatorService.addSchedule(data)
-      .then((response) => {
-        setSuccessMsg(response.data.message)
-        // console.log("after select title", response.data.message)
-        localStorage.removeItem("schedules");
-        window.location.reload();
-
+    // let scheduleDetail = new FormData();
+    // scheduleDetail.append("courseTitle",props.courseTitle);
+    // scheduleDetail.append("topic",topic);
+    // scheduleDetail.append("slotStart",slotStart);
+    // scheduleDetail.append("slotEnd",slotEnd);
+    // scheduleDetail.append("date",date);
+    // scheduleDetail.append("sl",sl);
+    const data = localStorage.getItem('schedules');
+    EducatorService.addSchedule(data).then(
+      (response) => {
+        // console.log("shchedule", response.data.message);
+        setSuccessMsg(response.data.message);
       }).catch((err) => {
         // console.log(err.response.data.message);
-        setErr(err.response.data.message);
-        setShowErr(true);
+        setFailMsg(err.response.data.message);
         if (err.response.data.message === "Unauthorized!") {
           AuthService.logout();
-          navigate('/signin');
+          navigate("/signin")
           window.location.reload();
         }
-      });;
-
+      });
 
   }
   return (
     <>
-
-      <div className='grid grid-cols-3 gap-5 m-auto'>
+      {/* <h1>Course Schedule List</h1>
+      <p>Add and View your Schedules </p> */}
+      <div className='grid grid-cols-2 gap-10 m-auto'>
 
         <div className=" mt-2 text-start">
           <form
@@ -125,20 +125,20 @@ export const Schedule = (props) => {
             <button className="border p-1 mt-4 text-lg rounded-lg bg-purple-900 text-white w-30 m-auto focus:outline-none focus:shadow-outline" onClick={handleAddMoreSubmit} >
               Add More
             </button>
-            <button className="border p-1 mt-4 text-lg rounded-lg bg-purple-900 text-white w-30 m-auto focus:outline-none focus:shadow-outline" type='submit'   >Submit </button>
+            {failMsg && <div className="text-red-600 font-semibold mb-3">{failMsg}</div>}
             {successMsg ?
               <div className='text-center mt-6 text-2xl font-semibold text-purple-700 capitalize'>
                 {successMsg}
               </div>
               : null}
-            {showErr && <div className="text-red-600 font-semibold">{err}</div>}
+            <button className="border p-1 mt-4 text-lg rounded-lg bg-purple-900 text-white w-30 m-auto focus:outline-none focus:shadow-outline" type='submit' >Submit</button>
           </form>
         </div>
-        <div className='col-span-2 gap-2 place-items-center'>
+        <div className='w-fit gap-2 place-items-center'>
           {schedules.length > 0 && <>
-            <div className='overflow-x-auto relative shadow-md sm:rounded-lg ml-10'>
+            <div className='overflow-x-auto relative shadow-md sm:rounded-lg'>
               <table className='w-full text-sm text-left text-purple-500 dark:text-purple-400'>
-                <thead className='text-xs text-white uppercase bg-purple-50 dark:bg-purple-700 dark:text-white'>
+                <thead className='text-xs text-purple-700 uppercase bg-purple-50 dark:bg-purple-700 dark:text-purple-400'>
                   <tr>
                     <th scope="col" className="py-2 px-4">SL#</th>
                     <th scope="col" className="py-2 px-4">Topic</th>
@@ -154,10 +154,10 @@ export const Schedule = (props) => {
                 </tbody>
               </table>
             </div>
-            <button className="border p-1 text-lg rounded-lg bg-red-700 text-white w-32 ml-56 mt-5 focus:outline-none focus:shadow-outline "
+            <button className="border p-1 mt-2 text-lg rounded-lg bg-red-900 text-white w-32 m-auto focus:outline-none focus:shadow-outline "
               onClick={() => setSchedules([])}>Remove All</button>
           </>}
-          {schedules.length < 1 && <div className="w-84 ml-14 text-center m-auto p-6 text-lg text-purple-900 border-2 rounded-md  overflow-auto">No schedules are added yet</div>}
+          {schedules.length < 1 && <div className="w-full m-auto p-6 text-lg text-purple-900 border-2 rounded-md  overflow-auto">No schedules are added yet</div>}
         </div>
 
       </div>

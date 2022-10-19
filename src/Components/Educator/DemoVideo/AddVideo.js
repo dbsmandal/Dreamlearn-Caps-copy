@@ -3,7 +3,7 @@ import VideoInput from './VideoInput'
 
 const AddDemoVideo = () => {
   return (
-    <div className='w-4/12 m-auto '>
+    <div className='w-8/12 m-auto rounded-md border shadow-sm shadow-purple-500 mt-10 mb-5'>
       <VideoInput />
 
     </div>

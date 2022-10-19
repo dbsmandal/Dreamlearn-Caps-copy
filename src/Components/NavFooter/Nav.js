@@ -18,7 +18,7 @@ function Nav(props) {
   }
 
   return (
-    <div className="sticky top-0 z-10  ">
+    <div className="sticky top-0 z-50  ">
       <div className="container-fluid">
         <nav className="flex items-center py-1 bg-purple-900 text-white justify-between ">
           <div className="flex px-0 -space-x-0.5 container-fluid ">
@@ -49,7 +49,7 @@ function Nav(props) {
             <ul className=" flex  sm:mt-0 items-center py-2  space-x-10 px-20 text-xl ">
               {/* <Link to="/" className="font-bold cursor-pointer mt-5 hover:rounded-lg hover:shadow-purple-100 shadow-lg">LandingPage</Link> */}
               {/* <Link to="/home" className="font-bold cursor-pointer mt-5 hover:shadow-purple-100 hover:rounded-lg shadow-lg">Home</Link> */}
-              {learner && <Link to="/home" className="font-bold cursor-pointer mt-5 hover:shadow-purple-100 hover:rounded-lg shadow-lg">Home</Link>}
+              {learner && <Link to="/learner" className="font-bold cursor-pointer mt-5 hover:shadow-purple-100 hover:rounded-lg shadow-lg">Home</Link>}
               {learner && <Link to="/profile" className="font-bold cursor-pointer mt-5 hover:shadow-purple-100 hover:rounded-lg shadow-lg">{currentUser.username}</Link>}
               {learner && (<div className="font-bold cursor-pointer mt-5 hover:rounded-lg hover:shadow-purple-100 shadow-lg" onClick={logOut}>Logout</div>)}
               {/* educator home */}
