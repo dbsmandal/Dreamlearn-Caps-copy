@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import Carousel from "../Hero Section/Carousel";
 import AuthService from "../Auth/auth.service";
 import Cards from '../Cards'
 import card from '../Cards/cards.json';
+// import useHistory from 'react-router-dom'
 function SignIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,11 +17,29 @@ function SignIn() {
     const [passwordError, setPasswordError] = useState([]);
     const [showErr, setShowErr] = useState(false);
     const [err, setErr] = useState([]);
-    const navigate = useNavigate();
     const validationSchema = Yup.object().shape({
         username: Yup.string().required('**Username is required'),
         password: Yup.string().required('**Password is required')
     });
+
+    const navigate = useNavigate()
+    const user = JSON.parse(localStorage.getItem('user'));
+    useEffect(() => {
+
+        if (!user) {
+            navigate('/signin')
+
+        }
+        const checkRole = (user) => {
+
+            if (user.role === 'ROLE_LEARNER') {
+                navigate('/learner')
+            }
+            navigate('/educator')
+        }
+        checkRole();
+    }, [user,navigate]);
+
 
     const handleEnterPress = async (e) => {
         console.log("Enter event", e.key)
@@ -71,7 +90,8 @@ function SignIn() {
                     // console.log(data.role, 'signin res')
                     if (data.role === "ROLE_LEARNER") {
                         // console.log('learner home', data)
-                        navigate('/learner')   //learner home
+                        navigate('/learner')
+                        //learner home
                     }
                     if (data.role === "ROLE_EDUCATOR") {
                         // console.log('educator home')

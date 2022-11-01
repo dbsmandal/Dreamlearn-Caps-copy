@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 
 const PageNotFound = () => {
 
     return (
         <>
             <div className=" w-8/12 m-auto rounded-md border shadow-md shadow-purple-500 mt-20 mb-5 ">
+                <Link to='./home'>
                 <div className="mt-10 w-8/12 m-auto flex flex-col justify-center items-center bg-white">
                     <h1 className=" text-9xl font-extrabold text-purple-900 tracking-widest m-auto">404</h1>
                     <div className="bg-white px-2 text-xl text-purple-500 rounded rotate-12 absolute shadow-sm shadow-purple-500">
@@ -20,6 +22,8 @@ const PageNotFound = () => {
                         </a>
                     </button>
                 </div>
+                </Link>
+               
 
             </div>
 

@@ -1,0 +1,32 @@
+[
+    {
+        "name":"Dipak Mandal",
+        "id":1,
+        "role":"Frontend Developer",
+        "profileImage":"https://media-exp1.licdn.com/dms/image/D5603AQG1XhWaX9ZKrw/profile-displayphoto-shrink_800_800/0/1663572180327?e=1672876800&v=beta&t=hoi0vV8j-taRlReABtLj8OnBrseIKSzKlEcZJcCCC9M",
+        "email":"dipakmandaljio420@gmail.com",
+        "linkden":"https://www.linkedin.com/in/dipak-mandal-7a12951a7/",
+        "github":"https://github.com/dbsmandal",
+        "portfolio":"https://dbsmandalportfolio.netlify.app/"
+    },
+    {
+        "name":"Megha Maurya",
+        "id":2,
+        "role":"Frontend Developer",
+        "profileImage":"https://media-exp1.licdn.com/dms/image/D5603AQG1XhWaX9ZKrw/profile-displayphoto-shrink_800_800/0/1663572180327?e=1672876800&v=beta&t=hoi0vV8j-taRlReABtLj8OnBrseIKSzKlEcZJcCCC9M",
+        "email":"dipakmandaljio420@gmail.com",
+        "linkden":"https://www.linkedin.com/in/dipak-mandal-7a12951a7/",
+        "github":"https://github.com/dbsmandal",
+        "portfolio":"https://dbsmandalportfolio.netlify.app/"
+    },
+    {
+        "name":"Nikhil Gangeri",
+        "id":3,
+        "role":"Backend Developer",
+        "profileImage":"https://media-exp1.licdn.com/dms/image/D5603AQG1XhWaX9ZKrw/profile-displayphoto-shrink_800_800/0/1663572180327?e=1672876800&v=beta&t=hoi0vV8j-taRlReABtLj8OnBrseIKSzKlEcZJcCCC9M",
+        "email":"dipakmandaljio420@gmail.com",
+        "linkden":"https://www.linkedin.com/in/dipak-mandal-7a12951a7/",
+        "github":"https://github.com/dbsmandal",
+        "portfolio":"https://dbsmandalportfolio.netlify.app/"
+    }
+]

@@ -16,6 +16,7 @@ const LearnerHome = () => {
                 setLoading(true);
                 const response = await LearnerService.getLearnerDashBoard();
                 setLearnerContent(response.data.message);
+                console.log(response)
                 setLoading(false);
             } catch (err) {
                 // console.log(err);

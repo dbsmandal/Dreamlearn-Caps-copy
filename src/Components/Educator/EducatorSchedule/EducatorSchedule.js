@@ -57,8 +57,8 @@ const EducatorSchedule = () => {
                                         <div className="text-start pl-2  font-semibold text-xl text-purple-700">{item.topic}</div>
                                     </div>
                                     <div className="my-auto">
-                                        <div className=" font-semibold text-lg text-purple-700">Date: {item.date}</div>
-                                        <div className=" font-semibold text-lg text-purple-700">Time: {item.slotStart}-{item.slotEnd}
+                                        <div className=" font-semibold text-lg text-purple-700">Date : {item.date}</div>
+                                        <div className=" font-semibold text-lg text-purple-700">Time : {item.slotStart}-{item.slotEnd}
                                         </div>
                                     </div>
                                     <div className="my-auto text-end mr-2">
