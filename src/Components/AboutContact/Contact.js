@@ -19,37 +19,50 @@ function Contact() {
           ContactData.map(({ id, github, linkden, name, portfolio, profileImage, role }) => {
             return (
               <div key={id} className='grid gap-5'>
-                <div className="grid grid-rows-2 ">
-                  <div className="bg-red-600">
+                <div className="grid grid-cols-3 ">
+                  <div className=" col-span-1 place-self-center w-96">
                     {/* image div */}
-                    <figure >
+                    <figure className="grid place-content-center" >
                       <img className="h-48 w-auto rounded-t-lg " 
                        src={profileImage} alt={name} />
                     </figure>
 
                   </div>
-                  <div className="grid grid-cols-2 bg-green-800">
+                  <div className=" place-self-center col-span-2 w-96">
+                  <div className="grid grid-cols-2">
                     {/* data div */}
                     <div>
-                      <span className="text-lg">{name}</span>
-                      <span className="text-sm">({role})</span>
+                      <p className="text-lg">{name}</p>
+                      <p className="text-sm">({role})</p>
 
                     </div>
                     <div className="grid grid-cols-3">
                       <a href={github} target='_blank' rel="noreferrer">
-                        <BsGithub />
+                       <div className="grid place-content-center ">
+                       <BsGithub  className="w-12 h-12"/>
+                        <p className="text-sm text-sky-500">Github </p>
+                       </div>
                       </a>
                       <a href={linkden} target='_blank' rel="noreferrer">
-                        <AiFillLinkedin />
+                        <div className="grid place-content-center ">
+                        <AiFillLinkedin  className="w-12 h-12" />
+                        <p className="text-sm text-sky-500">Linkden </p>
+                        </div>
                       </a>
                       <a href={portfolio} target='_blank' rel="noreferrer">
-                        <BsFillPersonCheckFill />
+                       <div className="grid place-content-center ">
+                       <BsFillPersonCheckFill  className="w-12 h-12"/>
+                        <p className="text-sm text-sky-500">Portfolio</p>
+                       </div>
 
                       </a>
                     </div>
 
 
                   </div>
+                    
+                  </div>
+                 
 
                 </div>
 
@@ -64,7 +77,7 @@ function Contact() {
                </div> */}
 
                 {/* <div>
-               <span className="text-lg">{name}</span> <span className="text-sm">({role})</span>
+               <p className="text-lg">{name}</p> <p className="text-sm">({role})</p>
                <div>
                 <h1>Personal Profile</h1>
                 <div className="grid grid-cols-3">
